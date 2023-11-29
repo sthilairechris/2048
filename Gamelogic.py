@@ -12,7 +12,7 @@ def game():
         if direction == 'x':
             gamerunning = False
         move(board, direction)
-        generate_new_sq(board)
+        checkforwin(board)
 
         #Checkforloss
 
@@ -123,6 +123,14 @@ def combine_Down(board):
                 board[x][y+1] = 0
                 merged[x][y] = True
                 
+def checkforwin(board):
+    directions = ['w', 'a', 's', 'd']
+    for d in directions:
+        temp_board = copy.deepcopy(board)
+        move(temp_board, d)
+        if temp_board != board:
+            return False
+    return True
 
 def move(board, direction):
     temp_board = copy.deepcopy(board)
@@ -183,19 +191,20 @@ def print_board(board):
 
 def generate_new_sq(board):
     Full = False
+    while not Full:
     #beginning to the loop. We don't know how many times we'll need it
-    new_x = random.randint(0,3)
-    new_y = random.randint(0,3)
-
-        #Empty square
-    if board[new_x][new_y] == 0:
-            #1 in 10 chance space = 4
-        if random.randint(1,10) == 10:
-                board[new_x][new_y] = 4 
-        else:    
-                board[new_x][new_y] = 2
-        #Can place a 2 there
-        Full = True
-            #Exit to the loop
+        new_x = random.randint(0,3)
+        new_y = random.randint(0,3)
+    
+            #Empty square
+        if board[new_x][new_y] == 0:
+                #1 in 10 chance space = 4
+            if random.randint(1,10) == 10:
+                    board[new_x][new_y] = 4 
+            else:    
+                    board[new_x][new_y] = 2
+            #Can place a 2 there
+            Full = True
+                #Exit to the loop
 
 

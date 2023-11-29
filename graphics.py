@@ -74,6 +74,9 @@ while run:
             elif event.key == pygame.K_s:
                 Gamelogic.move(board, 's')  
             elif event.key == pygame.K_d:
-                Gamelogic.move(board, 'd')      
+                Gamelogic.move(board, 'd')  
+
+    run = not Gamelogic.checkforwin(board)
+
 
     pygame.display.update()
