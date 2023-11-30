@@ -64,6 +64,7 @@ while run:
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
+            print("Quit Event!")
             run = False
 
         elif event.type == pygame.KEYDOWN:
@@ -76,7 +77,11 @@ while run:
             elif event.key == pygame.K_d:
                 Gamelogic.move(board, 'd')  
 
+    if not run:
+        break
+
     run = not Gamelogic.checkforwin(board)
 
-
     pygame.display.update()
+
+pygame.quit()
