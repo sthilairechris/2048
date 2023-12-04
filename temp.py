@@ -1,25 +1,16 @@
-x = 7 
-y = 16
-z = x
-x = y
+import pandas as pd
+import os
 
-y = z
+DATA_PATH = os.path.join(os.getcwd(), 'data.csv')
 
-print(x)
-print(y)
+mydataset = {
+  'cars': ["BMW", "Volvo", "Ford"], 
+  'passings': [3, 7, 2]
+}
 
+myvar = pd.DataFrame(mydataset,)
+myvar.index.name = 'ID'
 
-def Shift_left(board):
-    for x in range(4):
-        for y in range(4):
-            shift = 0
-            if x > 0: 
-                #z is a placeholder for however many spaces are in the column
-                for z in range(x):
-                    if board[z][y] == 0:
-                        #allows us to shift into whatever space = 0
-                        shift += 1 
-                        if shift > 0: 
-                            if board[x - shift][y] == 0:
-                                board[x - shift][y] = board[x][y]
-                                board[x][y] = 0
+print(myvar)
+
+myvar.to_csv(DATA_PATH)

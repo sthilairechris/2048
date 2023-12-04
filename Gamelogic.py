@@ -188,6 +188,13 @@ def print_board(board):
     print('|     |     |     |     |')
     print('-' *25)
 
+def flatten_board(board):
+    flat_board = []
+    for row in board:
+        for sq in row:
+           flat_board.append(sq) 
+    return flat_board
+
 
 def generate_new_sq(board):
     Full = False

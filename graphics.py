@@ -8,12 +8,14 @@ board = Gamelogic.create_board()
 
 
 pygame.init()
-font = pygame.font.SysFont("monospace", 20)
+font = pygame.font.Font("freesansbold.ttf", 20)
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 400
+SCREEN_HEIGHT = 400
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption('2048')
+
 
 run = True
 
@@ -40,9 +42,9 @@ def render_board(screen, board):
     square_width = 60
     for x in range(4):
         for y in range(4):
-            pygame.draw.rect(screen, colors[board[x][y]], pygame.Rect((30 + square_width) * x +50, (30 + square_width) * y + 50, square_width, square_width))
+            pygame.draw.rect(screen, colors[board[x][y]], pygame.Rect((30 + square_width) * x +50, (30 + square_width) * y + 50, square_width, square_width), 0, 5)
             text_values = font.render(f'{board[x][y]}', 1, (0,0,0))
-            screen.blit(text_values, ((30 + square_width) * x +50 +square_width / 2, (30 + square_width) * y + 50 + square_width / 2))
+            screen.blit(text_values, ((30 + square_width) * x +50 + square_width / 2, (30 + square_width) * y + 50 + square_width / 2))
 
 
 #def square_values(board):
