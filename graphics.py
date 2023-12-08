@@ -1,9 +1,12 @@
 import pygame
 import Gamelogic
+import Game
 
 
 
 board = Gamelogic.create_board()
+
+g = Game.Game()
 
 
 
@@ -11,7 +14,7 @@ pygame.init()
 font = pygame.font.Font("freesansbold.ttf", 20)
 
 SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 400
+SCREEN_HEIGHT = 500
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('2048')
@@ -38,13 +41,15 @@ colors = {0: (204, 192, 179),
 
 board_values = [[0 for _ in range(4) for _ in range(4)]]
 
-def render_board(screen, board):
+def render_board(screen, game):
+    pygame.draw.rect(screen, colors['bg'], pygame.Rect(0,0, SCREEN_HEIGHT, SCREEN_WIDTH))
     square_width = 60
     for x in range(4):
         for y in range(4):
-            pygame.draw.rect(screen, colors[board[x][y]], pygame.Rect((30 + square_width) * x +50, (30 + square_width) * y + 50, square_width, square_width), 0, 5)
-            text_values = font.render(f'{board[x][y]}', 1, (0,0,0))
+            pygame.draw.rect(screen, colors[g.get_value(x,y)], pygame.Rect((30 + square_width) * x +50, (30 + square_width) * y + 50, square_width, square_width), 0, 5)
+            text_values = font.render(f'{g.get_value(x, y)}', 1, (0,0,0))
             screen.blit(text_values, ((30 + square_width) * x +50 + square_width / 2, (30 + square_width) * y + 50 + square_width / 2))
+
 
 
 #def square_values(board):
@@ -62,7 +67,8 @@ def render_board(screen, board):
 
 while run:
 
-    render_board(screen, board)
+    render_board(screen, g)
+
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -71,13 +77,13 @@ while run:
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
-                Gamelogic.move(board, 'w')
+                g.move('w')
             elif event.key == pygame.K_a:
-                Gamelogic.move(board, 'a')
+                g.move('a')
             elif event.key == pygame.K_s:
-                Gamelogic.move(board, 's')  
+                g.move('s')  
             elif event.key == pygame.K_d:
-                Gamelogic.move(board, 'd')  
+                g.move('d')  
 
     if not run:
         break
