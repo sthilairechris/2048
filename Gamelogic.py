@@ -36,15 +36,7 @@ def place(board, x, y):
 
 
     
-def Shift_Right(board):
-    for _ in range(3):
-        for x in range(3):
-            for y in range(4):
-             if board[x][y] == 0:
-                continue
-             if board[x+1][y] == 0:
-                board[x+1][y] = board[x][y]
-                board[x][y] = 0
+
             
 def combine_right(board):
     merged = [[False for _ in range(4)]for _ in range (4)]
@@ -57,15 +49,56 @@ def combine_right(board):
                 board[x+1][y] = 0
                 merged[x][y] = True
 
-def Shift_Left(board):
+
+
+
+def shift_direction(board, direction):
+#    board[x][y] == 0 
+ #   left = board[x-1][y]
+ #   right = board[x+1][y]
+ #   up = board[x][y-1]
+ #   down = board[x][y + 1]
+    xDirec = 0 
+
+    yDirec = 0
+
+    match direction: 
+        case 'w':
+            yDirec = -1
+
+        case 'd':
+            yDirec = 1
+        
+        case 'a':
+            xDirec = -1
+
+        case 'd':
+            xDirec = 1
+
     for _ in range(3):
-        for x in range(1,4):
+        for x in range(3):
             for y in range(4):
-                if board[x][y] == 0:
-                    continue
-                if board[x-1][y] == 0:
-                    board[x-1][y] = board[x][y]
-                    board[x][y] = 0
+             if board[x][y] == 0:
+                continue
+             if board[x + xDirec][y + yDirec] == 0:
+                board[x + xDirec][y + yDirec] = board[x][y]
+                board[x][y] = 0
+
+
+#def Shift(board, direction):
+#    for x in range(4):
+#            for y in range(4):
+#                if board[x][y] == 0:
+#                    continue
+#                for x in range(len(board)-1):  
+#                    # to check the left/right entries on the last row
+#                    if board[len(board)-1][x] == board[len(board)-1][x+1]:
+#                        return 
+#                for y in range(len(board)-1):  
+#                    # check up/down entries on last column
+#                    if board[y][len(board)-1] == board[y+1][len(board)-1]:
+#                        return 
+
 
 
 def combine_Left(board):
@@ -80,15 +113,6 @@ def combine_Left(board):
                 merged[x][y] = True
 
 
-def Shift_Up(board):
-    for _ in range(3):
-        for x in range(4):
-            for y in range(1,4):
-                if board[x][y] == 0:
-                    continue
-                if board[x][y-1] == 0:
-                    board[x][y-1] = board[x][y]
-                    board[x][y] = 0
 
 def combine_Up(board):
     merged = [[False for _ in range(4)]for _ in range (4)]
@@ -102,15 +126,6 @@ def combine_Up(board):
                 merged[x][y] = True
              
 
-def Shift_Down(board):
-    for _ in range(3):
-        for x in range(4):
-            for y in range(3):
-                if board[x][y] == 0:
-                    continue
-                if board[x][y+1] == 0:
-                    board[x][y+1] = board[x][y]
-                    board[x][y] = 0
         
 def combine_Down(board):
     merged = [[False for _ in range(4)]for _ in range (4)]
@@ -137,21 +152,21 @@ def move(board, direction):
     
     match direction:
         case 'w':
-            Shift_Up(board)
+            shift_direction(board, direction)
             combine_Up(board)
-            Shift_Up(board)
+            shift_direction(board, direction)
         case 'a':
-            Shift_Left(board)
+            shift_direction(board, direction)
             combine_Left(board)
-            Shift_Left(board)
+            shift_direction(board, direction)
         case 's':
-            Shift_Down(board)
+            shift_direction(board, direction)
             combine_Down(board)
-            Shift_Down(board)
+            shift_direction(board, direction)
         case 'd': 
-            Shift_Right(board)
+            shift_direction(board, direction)
             combine_right(board)
-            Shift_Right(board)
+            shift_direction(board, direction)
 
     if temp_board != board:
         generate_new_sq(board)
@@ -159,7 +174,7 @@ def move(board, direction):
 
 def create_board():
     ys, xs = (4, 4)
-    board = [[0 for i in range(xs)] for j in range(ys)]
+    board = [[0 for i in range(xs)] for y in range(ys)]
     generate_new_sq(board)
     generate_new_sq(board)
     
